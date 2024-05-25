@@ -1,0 +1,7 @@
+{
+    "compilerOptions": {
+        // Other compiler options you might have
+        "jsx": "preserve" // This line fixes the JSX handling error
+    },
+    "exclude": ["node_modules"]
+}
