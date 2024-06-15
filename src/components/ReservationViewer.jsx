@@ -57,7 +57,7 @@ function ReservationViewerMainContainer({
                         ? subWeeks(currentReferenceDate, offset * -1)
                         : new Date();
                 setReferenceDate(new_reference_date);
-                setDateRange(generateDateRange(new_reference_date));
+                setDateRange(generateDateRange(new_reference_date, 'week'));
                 break;
             }
             case 'day':
@@ -159,8 +159,7 @@ export default function ReservationViewer() {
                 //    5: {},
                 //    6: {},
                 //};
-                const day_groups = [{}, {}, {}, {}, {}, {}];
-                console.log(day_groups);
+                const day_groups = [{}, {}, {}, {}, {}, {}, {}];
                 json['reservations'].forEach((r, ri) => {
                     const day_numeric = getDay(r['date']);
                     const start_time = lightFormat(r['date'], 'HH:mm');
@@ -236,7 +235,7 @@ export default function ReservationViewer() {
                                     key={di}
                                     className={`flex-1 text-center flex flex-row flex-nowrap md:flex-col`}
                                 >
-                                    <div className="bg-neutral-50 w-12 flex flex-col flex-nowrap justify-center poppins-light text-xs px-2 md:px-0 md:py-2 md:w-full md:block">
+                                    <div className="bg-neutral-50 w-14 flex flex-col flex-nowrap justify-center poppins-light text-xs px-2 shadow-[4px_0_3px_-3px_rgba(0,0,0,0.5)] me-[3px] md:me-0 md:mb-[3px] md:shadow-[0_4px_3px_-3px_rgba(0,0,0,0.5)] md:px-0 md:py-2 md:w-full md:block">
                                         <div className="uppercase">
                                             {DAYS_OF_THE_WEEK[di].slice(0, 3)}
                                         </div>

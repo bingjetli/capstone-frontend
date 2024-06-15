@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import ReservationCard from './ReservationCard';
 
 export default function ReservationContainer({
@@ -5,6 +6,15 @@ export default function ReservationContainer({
     dereferenceReservationIndex,
     view,
 }) {
+    const sorted_data_entries = useMemo(() => {
+        return Object.entries(data).sort(([a_time], [b_time]) => {
+            //Since the parameters a and b are returned as arrays containing
+            //one element which holds the time. We destructure it in the
+            //comparator function.
+            return a_time.localeCompare(b_time);
+        });
+    }, [data]);
+
     switch (view) {
         case 'day':
         case 'week': {
@@ -25,7 +35,7 @@ export default function ReservationContainer({
 
             return (
                 <div className={container_css}>
-                    {Object.entries(data).map(([t, tr], ei) => {
+                    {sorted_data_entries.map(([t, tr], ei) => {
                         return (
                             <div
                                 key={ei}

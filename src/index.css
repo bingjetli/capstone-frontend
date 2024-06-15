@@ -160,6 +160,93 @@
     font-style: normal;
 }
 
+.modal-wrapper {
+    backdrop-filter: blur(3px);
+    animation-name: anim-modal-wrapper;
+    animation-duration: 250ms;
+    animation-iteration-count: 1;
+}
+
+.modal-reservation-card-wrapper {
+    animation-name: anim-modal-reservation-card-wrapper;
+    animation-duration: 250ms;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(1, -0.01, 0.34, 1);
+    height: 30rem;
+}
+
+.modal-secondary-wrapper {
+    animation-name: anim-modal-secondary-wrapper;
+    animation-duration: 250ms;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(1, -0.01, 0.34, 1);
+}
+
+@keyframes anim-modal-wrapper {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes anim-modal-reservation-card-wrapper {
+    from {
+        height: 0px;
+    }
+    to {
+        height: 30rem;
+    }
+}
+
+@keyframes anim-modal-secondary-wrapper {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+/******************
+---MEDIA QUERIES---
+******************/
+@media (min-width: 640px) {
+    /*sm*/
+}
+@media (min-width: 768px) {
+    /*md*/
+    .modal-reservation-card-wrapper {
+        height: 33rem;
+        max-height: 33rem;
+    }
+
+    @keyframes anim-modal-reservation-card-wrapper {
+        from {
+            height: 0px;
+        }
+        to {
+            height: 33rem;
+        }
+    }
+
+    @keyframes anim-modal-secondary-wrapper {
+        from {
+            width: 0%;
+        }
+        to {
+            width: 20rem;
+        }
+    }
+}
+@media (min-width: 1024px) {
+    /*lg*/
+}
+@media (min-width: 1280px) {
+    /*xl*/
+}
+
 /** DISABLED CSS
 .thread {
     height: 1px;
