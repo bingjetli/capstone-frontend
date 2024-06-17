@@ -169,8 +169,8 @@ export default function App() {
                                 </div>
                             </button>
                             <button
-                                className="poppins-light text-center py-4 block w-full flex flex-col items-center"
-                                onClick={() => changePage('blacklist')}
+                                className="poppins-light text-center py-4 block w-full flex flex-col items-center text-slate-600"
+                                //onClick={() => changePage('blacklist')}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
