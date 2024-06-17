@@ -298,7 +298,7 @@ export default function ReservationViewer({ reservationRefreshSignal }) {
                             return (
                                 <div
                                     key={di}
-                                    className={`flex-1 text-center flex flex-row flex-nowrap md:flex-col`}
+                                    className={`flex-1 text-center flex flex-row flex-nowrap md:flex-col border-y-[1px] border-y-slate-300 md:border-y-0 md:border-x-[1px] md:border-x-slate-300`}
                                 >
                                     <div className="bg-neutral-50 w-14 flex flex-col flex-nowrap justify-center poppins-light text-xs px-2 shadow-[4px_0_3px_-3px_rgba(0,0,0,0.5)] me-[3px] md:me-0 md:mb-[3px] md:shadow-[0_4px_3px_-3px_rgba(0,0,0,0.5)] md:px-0 md:py-2 md:w-full md:block">
                                         <div className="uppercase">

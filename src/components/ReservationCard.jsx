@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Modal from './Modal';
 import ReservationModal from './ReservationModal';
+import User from './User';
 
 export default function ReservationCard({ data, view, refreshReservations }) {
     const {
@@ -28,11 +29,11 @@ export default function ReservationCard({ data, view, refreshReservations }) {
                         <div className="capitalize max-w-20 truncate">{`${firstName.charAt(
                             0
                         )}. ${lastName}`}</div>
-                        <div>
-                            {seats}
-                            <span className="ms-1 text-xs text-slate-500 poppins-light">
-                                seats
-                            </span>
+                        <div className="hidden justify-center items-center md:flex">
+                            <div className="text-lg leading-none ">{seats}</div>
+                            <div className="w-3 fill-slate-500 translate-y-[2px]">
+                                <User />
+                            </div>
                         </div>
                     </div>
                     {modal_shown ? (
@@ -65,19 +66,26 @@ export default function ReservationCard({ data, view, refreshReservations }) {
                 >
                     <div className="flex flex-row flex-nowrap justify-between gap-2 p-2 border-s-4">
                         <div className="flex-1 flex flex-row flex-nowrap gap-2">
-                            <div className="flex-1 hidden md:block">
+                            <div className="flex-1 hidden md:block md:capitalize md:text-center">
                                 {firstName}
                             </div>
-                            <div className="flex-1 hidden md:block">
+                            <div className="flex-1 hidden md:block md:capitalize md:text-center">
                                 {lastName}
                             </div>
-                            <div className="flex-1 truncate md:hidden">{`${firstName.charAt(
-                                0
-                            )}. ${lastName}`}</div>
-                            <div className="flex-1">
-                                {tableId}{' '}
-                                <span className="text-slate-500 text-xs poppins-light">
-                                    seats
+                            <div className="flex-1 truncate text-center md:hidden">
+                                <span className="inline-block capitalize me-2">
+                                    {firstName.charAt(0)}.
+                                </span>
+                                <span className="inline-block capitalize">
+                                    {lastName}
+                                </span>
+                            </div>
+                            <div className="flex-1 flex items-center justify-center">
+                                <span className="me-1">{seats}</span>
+                                <span className="fill-slate-500 text-xs poppins-light">
+                                    <div className="w-4">
+                                        <User />
+                                    </div>
                                 </span>
                             </div>
                         </div>

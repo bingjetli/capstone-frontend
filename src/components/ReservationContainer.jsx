@@ -21,7 +21,7 @@ export default function ReservationContainer({
         case 'week': {
             const container_css =
                 view === 'day'
-                    ? 'mt-[2px] flex flex-col flex-nowrap overflow-auto w-full h-full p-2'
+                    ? 'mt-[2px] flex flex-col flex-nowrap overflow-auto w-full h-full p-2 md:px-8 md:py-4'
                     : 'flex flex-row flex-nowrap overflow-auto w-full h-full px-2 gap-8 md:px-1 md:flex-col';
 
             const time_css =

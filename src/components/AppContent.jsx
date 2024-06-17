@@ -1,3 +1,4 @@
+import ReservationRequestsViewer from './ReservationRequestsViewer';
 import ReservationViewer from './ReservationViewer';
 import SettingsViewer from './SettingsViewer';
 
@@ -15,7 +16,9 @@ export default function AppContent({ page, reservationRefreshSignal }) {
             );
         case 'reservation-requests':
             return (
-                <div className="ms-[100px]">TODO: Reservation Requests UI</div>
+                <div className={container_styles}>
+                    <ReservationRequestsViewer />
+                </div>
             );
         case 'blacklist':
             return <div className="ms-[100px]">TODO: Blacklists UI</div>;

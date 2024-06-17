@@ -46,7 +46,7 @@ export default function SettingsViewer() {
                         <div>
                             <BookOpen />
                         </div>
-                        <div className="poppins-light w-full h-full py-4 text-left">
+                        <div className="poppins-light w-full h-full py-4 text-left text-sm">
                             Reservation Viewer
                         </div>
                         <div>
@@ -61,7 +61,7 @@ export default function SettingsViewer() {
                         <div>
                             <ExclamationCircle />
                         </div>
-                        <div className="poppins-light w-full h-full py-4 flex-1 text-left">
+                        <div className="poppins-light w-full h-full py-4 flex-1 text-left text-sm">
                             About
                         </div>
                         <div>
@@ -106,7 +106,7 @@ export default function SettingsViewer() {
                                     console.log(new_settings);
                                 }}
                             >
-                                <div className="poppins-light w-full h-full py-4 flex-1 text-left">
+                                <div className="poppins-light w-full h-full py-4 flex-1 text-left text-sm">
                                     Use 24h Time Format
                                 </div>
                                 <div
