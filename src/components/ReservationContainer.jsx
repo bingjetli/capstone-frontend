@@ -5,6 +5,7 @@ export default function ReservationContainer({
     data,
     dereferenceReservationIndex,
     view,
+    refreshReservations,
 }) {
     const sorted_data_entries = useMemo(() => {
         return Object.entries(data).sort(([a_time], [b_time]) => {
@@ -52,6 +53,9 @@ export default function ReservationContainer({
                                                 ri
                                             )}
                                             view={view}
+                                            refreshReservations={
+                                                refreshReservations
+                                            }
                                         />
                                     ))}
                                 </div>

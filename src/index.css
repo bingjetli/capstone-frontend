@@ -172,7 +172,7 @@
     animation-duration: 250ms;
     animation-iteration-count: 1;
     animation-timing-function: cubic-bezier(1, -0.01, 0.34, 1);
-    height: 30rem;
+    height: 500px;
 }
 
 .modal-secondary-wrapper {
@@ -180,6 +180,24 @@
     animation-duration: 250ms;
     animation-iteration-count: 1;
     animation-timing-function: cubic-bezier(1, -0.01, 0.34, 1);
+}
+
+.animate-mobile-only-width-transition-open,
+.animate-width-transition-open {
+    animation-name: anim-width-transition-open;
+    animation-duration: 250ms;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(1, -0.01, 0.34, 1);
+    animation-fill-mode: both;
+}
+
+.animate-mobile-only-width-transition-close,
+.animate-width-transition-close {
+    animation-name: anim-width-transition-close;
+    animation-duration: 250ms;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(1, -0.01, 0.34, 1);
+    animation-fill-mode: both;
 }
 
 @keyframes anim-modal-wrapper {
@@ -196,7 +214,7 @@
         height: 0px;
     }
     to {
-        height: 30rem;
+        height: 500px;
     }
 }
 
@@ -209,6 +227,28 @@
     }
 }
 
+@keyframes anim-width-transition-close {
+    from {
+        width: 100%;
+        opacity: 100%;
+    }
+    to {
+        width: 0%;
+        opacity: 0%;
+    }
+}
+
+@keyframes anim-width-transition-open {
+    from {
+        width: 0%;
+        opacity: 0%;
+    }
+    to {
+        width: 100%;
+        opacity: 100%;
+    }
+}
+
 /******************
 ---MEDIA QUERIES---
 ******************/
@@ -218,8 +258,28 @@
 @media (min-width: 768px) {
     /*md*/
     .modal-reservation-card-wrapper {
-        height: 33rem;
-        max-height: 33rem;
+        height: 545px;
+    }
+
+    .animate-mobile-only-width-transition-close,
+    .animate-mobile-only-width-transition-open {
+        animation-name: none;
+    }
+
+    .animate-tablet-opacity-transition-open {
+        animation-name: anim-tablet-opacity-transition-open;
+        animation-duration: 250ms;
+        animation-iteration-count: 1;
+        animation-timing-function: cubic-bezier(1, -0.01, 0.34, 1);
+        animation-fill-mode: both;
+    }
+
+    .animate-tablet-opacity-transition-close {
+        animation-name: anim-tablet-opacity-transition-close;
+        animation-duration: 250ms;
+        animation-iteration-count: 1;
+        animation-timing-function: cubic-bezier(1, -0.01, 0.34, 1);
+        animation-fill-mode: both;
     }
 
     @keyframes anim-modal-reservation-card-wrapper {
@@ -227,7 +287,7 @@
             height: 0px;
         }
         to {
-            height: 33rem;
+            height: 545px;
         }
     }
 
@@ -237,6 +297,24 @@
         }
         to {
             width: 20rem;
+        }
+    }
+
+    @keyframes anim-tablet-opacity-transition-close {
+        from {
+            opacity: 100%;
+        }
+        to {
+            opacity: 0%;
+        }
+    }
+
+    @keyframes anim-tablet-opacity-transition-open {
+        from {
+            opacity: 0%;
+        }
+        to {
+            opacity: 100%;
         }
     }
 }

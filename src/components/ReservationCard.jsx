@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Modal from './Modal';
 import ReservationModal from './ReservationModal';
 
-export default function ReservationCard({ data, view }) {
+export default function ReservationCard({ data, view, refreshReservations }) {
     const {
         firstName,
         lastName,
@@ -12,6 +12,7 @@ export default function ReservationCard({ data, view }) {
         date,
         phoneNumber,
         email,
+        seats,
     } = data;
 
     const [modal_shown, setModalShown] = useState(false);
@@ -24,21 +25,25 @@ export default function ReservationCard({ data, view }) {
                     onClick={() => setModalShown(true)}
                 >
                     <div className="flex-1">
-                        <div className="max-w-20 truncate">{`${firstName.charAt(
+                        <div className="capitalize max-w-20 truncate">{`${firstName.charAt(
                             0
                         )}. ${lastName}`}</div>
                         <div>
-                            {tableId}{' '}
-                            <span className="text-xs text-slate-500 poppins-light">
+                            {seats}
+                            <span className="ms-1 text-xs text-slate-500 poppins-light">
                                 seats
                             </span>
                         </div>
                     </div>
-                    <ReservationModal
-                        isShown={modal_shown}
-                        setVisibility={setModalShown}
-                        data={data}
-                    />
+                    {modal_shown ? (
+                        //TODO: the isShown prop is redundant. Fix it someday.
+                        <ReservationModal
+                            isShown={modal_shown}
+                            setVisibility={setModalShown}
+                            data={data}
+                            refreshReservations={refreshReservations}
+                        />
+                    ) : null}
                     {/*modal_shown ? (
                         //Conditionally render the modal dialog.
                         <div
@@ -82,6 +87,7 @@ export default function ReservationCard({ data, view }) {
                         isShown={modal_shown}
                         setVisibility={setModalShown}
                         data={data}
+                        refreshReservations={refreshReservations}
                     />
                 </div>
             );

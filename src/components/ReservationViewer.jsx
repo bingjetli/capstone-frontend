@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import {
     addDays,
     addWeeks,
@@ -13,6 +13,7 @@ import {
     subWeeks,
 } from 'date-fns';
 import ReservationContainer from './ReservationContainer';
+import SettingsContext from './SettingsContext';
 
 const DAYS_OF_THE_WEEK = [
     'sunday',
@@ -33,17 +34,20 @@ function generateDateRange(reference_date, range) {
             });
         case 'day':
         default:
-            return reference_date;
+            return [reference_date];
     }
 }
 
 function ReservationViewerMainContainer({
     children,
-    setViewScale,
     currentViewScale,
+    setViewScale,
+    currentDateRange,
     setDateRange,
     setReferenceDate,
     currentReferenceDate,
+    currentViewDay,
+    setViewDay,
 }) {
     //offset is used to determine how much to change the reference date
     //in order to recalcuate the date range.
@@ -62,26 +66,62 @@ function ReservationViewerMainContainer({
             }
             case 'day':
             default: {
-                const new_reference_date =
-                    offset > 0
-                        ? addDays(currentReferenceDate, offset)
-                        : offset < 0
-                        ? subDays(currentReferenceDate, offset * -1)
-                        : new Date();
-                setReferenceDate(new_reference_date);
-                setDateRange(generateDateRange(new_reference_date));
+                //const new_reference_date =
+                //    offset > 0
+                //        ? addDays(currentReferenceDate, offset)
+                //        : offset < 0
+                //        ? subDays(currentReferenceDate, offset * -1)
+                //        : new Date();
+                //setReferenceDate(new_reference_date);
+                //setDateRange(generateDateRange(new_reference_date));
+                if (currentViewDay + offset < 0) {
+                    //User is requesting the previous week. Recalculate
+                    //the date range and set the reference date to the
+                    //saturday of the week.
+                    const new_reference_date = addWeeks(
+                        currentReferenceDate,
+                        offset
+                    );
+                    setDateRange(generateDateRange(new_reference_date, 'week'));
+                    setReferenceDate(new_reference_date);
+                    setViewDay(6);
+                } else if (currentViewDay + offset > 6) {
+                    //User is requesting the next week. Recalculate the
+                    //date range and set the "reference date" to the
+                    //Sunday of next week.
+                    const new_reference_date = subWeeks(
+                        currentReferenceDate,
+                        offset * -1
+                    );
+                    setDateRange(generateDateRange(new_reference_date, 'week'));
+                    setReferenceDate(new_reference_date);
+                    setViewDay(0);
+                } else {
+                    //User is requesting a day within the week, so just
+                    //update the reference date and currentViewDay.
+                    setReferenceDate(currentDateRange[currentViewDay + offset]);
+                    setViewDay(currentViewDay + offset);
+                }
             }
         }
     };
 
     const updateViewScale = (new_view_scale) => {
-        setDateRange(generateDateRange(currentReferenceDate, new_view_scale));
+        //setDateRange(generateDateRange(currentReferenceDate, new_view_scale));
+        //setViewScale(new_view_scale);
         setViewScale(new_view_scale);
+        setReferenceDate(currentDateRange[currentViewDay]);
     };
 
     return (
         <div className="h-full pb-[100px]">
             <div className="bg-slate-50 flex flex-row flex-nowrap gap-2 justify-center py-2 md:justify-end md:pe-2">
+                {currentViewScale === 'week' ? (
+                    <div className="poppins-light text-md flex-1 flex justify-center items-center">
+                        {format(currentReferenceDate, 'MMM')}
+                    </div>
+                ) : null}
+
                 <button
                     className="poppins-light bg-slate-200 py-1 px-2 text-xs"
                     onClick={() => recalculateDateRange(-1)}
@@ -129,13 +169,21 @@ function ReservationViewerMainContainer({
     );
 }
 
-export default function ReservationViewer() {
+export default function ReservationViewer({ reservationRefreshSignal }) {
+    const { settings, setSettings } = useContext(SettingsContext);
+    console.log(settings);
+
     const [reference_date, setReferenceDate] = useState(new Date());
     const [view_scale, setViewScale] = useState('week');
     const [date_range, setDateRange] = useState(
         generateDateRange(reference_date, view_scale)
     );
+    //view_day : used specifically for the "day" view scale. Specifies
+    //          which day to render in the Reservation Viewer.
+    const [view_day, setViewDay] = useState(0);
     const [reservation_data, setReservationData] = useState(null);
+
+    const [refresh_token, setRefreshToken] = useState(false);
 
     const dereferenceReservationIndex = useCallback(
         (idx) => {
@@ -144,22 +192,26 @@ export default function ReservationViewer() {
         [reservation_data]
     );
 
+    const refreshReservations = () => setRefreshToken(!refresh_token);
+    //Automatically call "refreshReservations()" when this component
+    //receives a signal. This is also called on initialization.
+    useEffect(() => refreshReservations(), [reservationRefreshSignal]);
+
     useEffect(() => {
+        console.log('Useeffect triggered!');
         //Side effect to perform the initial data fetch from the server.
         const backend_api_endpoint = import.meta.env.VITE_BACKEND_API_ENDPOINT;
-        fetch(`${backend_api_endpoint}/api/reservations/fetch/all`)
+        const fetch_url = `${backend_api_endpoint}/api/reservations/fetch?startDate=${date_range[0].getTime()}&endDate=${date_range[
+            date_range.length - 1
+        ].getTime()}`;
+        fetch(fetch_url)
             .then((r) => r.json())
             .then((json) => {
-                //const day_groups = {
-                //    0: {},
-                //    1: {},
-                //    2: {},
-                //    3: {},
-                //    4: {},
-                //    5: {},
-                //    6: {},
-                //};
-                const day_groups = [{}, {}, {}, {}, {}, {}, {}];
+                //Generate an array of empty objects based on the size
+                //of the date_range.
+                const day_groups = date_range.map(() => new Object());
+                console.log(day_groups);
+                console.log(json);
                 json['reservations'].forEach((r, ri) => {
                     const day_numeric = getDay(r['date']);
                     const start_time = lightFormat(r['date'], 'HH:mm');
@@ -183,7 +235,7 @@ export default function ReservationViewer() {
                     groupedByDateTime: day_groups,
                 });
             });
-    }, []);
+    }, [date_range, refresh_token]);
 
     //The main container should have a bottom padding equal to the height
     //of the header, because it extends beyond the viewport and the overflow
@@ -195,8 +247,11 @@ export default function ReservationViewer() {
                     setViewScale={setViewScale}
                     currentViewScale={view_scale}
                     setDateRange={setDateRange}
+                    currentDateRange={date_range}
                     setReferenceDate={setReferenceDate}
                     currentReferenceDate={reference_date}
+                    setViewDay={setViewDay}
+                    currentViewDay={view_day}
                 >
                     <div className="h-full flex flex-col">
                         <div className="bg-slate-50 text-center poppins-light uppercase text-xs py-2 shadow-[0_3px_3px_-2px_rgba(0,0,0,0.5)]">
@@ -209,11 +264,18 @@ export default function ReservationViewer() {
                         </div>
                         {reservation_data ? (
                             <ReservationContainer
-                                data={reservation_data['groupedByDateTime'][1]}
+                                data={
+                                    //Uses view_day to determine which day to render. Otherwise,
+                                    //renders the first day by default.
+                                    reservation_data['groupedByDateTime'][
+                                        view_day
+                                    ]
+                                }
                                 dereferenceReservationIndex={
                                     dereferenceReservationIndex
                                 }
                                 view={view_scale}
+                                refreshReservations={refreshReservations}
                             />
                         ) : null}
                     </div>
@@ -225,8 +287,11 @@ export default function ReservationViewer() {
                     setViewScale={setViewScale}
                     currentViewScale={view_scale}
                     setDateRange={setDateRange}
+                    currentDateRange={date_range}
                     setReferenceDate={setReferenceDate}
                     currentReferenceDate={reference_date}
+                    setViewDay={setViewDay}
+                    currentViewDay={view_day}
                 >
                     <div className="h-full flex flex-col flex-nowrap md:flex-row">
                         {date_range.map((d, di) => {
@@ -253,6 +318,9 @@ export default function ReservationViewer() {
                                                 dereferenceReservationIndex
                                             }
                                             view={view_scale}
+                                            refreshReservations={
+                                                refreshReservations
+                                            }
                                         />
                                     ) : null}
                                 </div>
@@ -267,8 +335,11 @@ export default function ReservationViewer() {
                     setViewScale={setViewScale}
                     currentViewScale={view_scale}
                     setDateRange={setDateRange}
+                    currentDateRange={date_range}
                     setReferenceDate={setReferenceDate}
                     currentReferenceDate={reference_date}
+                    setViewDay={setViewDay}
+                    currentViewDay={view_day}
                 >
                     <div className="bg-teal-200 h-full">
                         Unrecognized View Scale : {view_scale}
