@@ -1,8 +1,11 @@
-# React + Vite
+# Fullstack Restaurant Reservation Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains the capstone project for my Humber Summer 2024 Web Development program.
 
-Currently, two official plugins are available:
+This is a fully-interactable frontend hosted on Vercel's serverless hosting platform. At the time of writing, it contains all the features of the MVP which includes CRUD actions on Reservations. It also partially implements the reservation requests features listed in the original requirements document.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project is currently under active development.
+
+# Live Hosted Demo
+
+The live demo can be access using the following link : https://humber-capstone-restaurant-reservation-frontend-eo8ngp7z7.vercel.app/
