@@ -1,19 +1,26 @@
-import { Menu, BookUser, BookDown, BookX, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import {
     Sheet,
     SheetContent,
     SheetDescription,
-    SheetHeader,
     SheetFooter,
+    SheetHeader,
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet';
-import { Separator } from '@/components/ui/separator';
+import { BookDown, BookUser, BookX, Menu, Settings } from 'lucide-react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function SidebarButton({ className }) {
+    const [is_open, setIsOpen] = useState(false);
+
     return (
-        <Sheet>
+        <Sheet
+            open={is_open}
+            onOpenChange={setIsOpen}
+        >
             <SheetTrigger asChild>
                 <Button
                     variant="ghost"
@@ -40,27 +47,71 @@ export default function SidebarButton({ className }) {
                 <div className="grow">
                     {/** Main Sheet Content */}
                     <div>
-                        <Button variant="ghost">
-                            <BookUser />
-                            <span className="ms-1">Reservations</span>
+                        <Button
+                            variant="ghost"
+                            asChild
+                            onClick={() => setIsOpen(false)}
+                        >
+                            {/* <a href="/">
+                                <BookUser />
+                                <span className="ms-1">Reservations</span>
+                            </a> */}
+                            <Link to={'/'}>
+                                <BookUser />
+                                <span className="ms-1">Reservations</span>
+                            </Link>
                         </Button>
                     </div>
                     <div>
-                        <Button variant="ghost">
-                            <BookDown />
-                            <span className="ms-1">Reservation Requests</span>
+                        <Button
+                            variant="ghost"
+                            asChild
+                            onClick={() => setIsOpen(false)}
+                        >
+                            {/* <a href="/reservation-requests">
+                                <BookDown />
+                                <span className="ms-1">
+                                    Reservation Requests
+                                </span>
+                            </a> */}
+                            <Link to={'/reservation-requests'}>
+                                <BookDown />
+                                <span className="ms-1">
+                                    Reservation Requests
+                                </span>
+                            </Link>
                         </Button>
                     </div>
                     <div>
-                        <Button variant="ghost">
-                            <BookX />
-                            <span className="ms-1">Blacklist</span>
+                        <Button
+                            variant="ghost"
+                            asChild
+                            onClick={() => setIsOpen(false)}
+                        >
+                            {/* <a href="/blacklist">
+                                <BookX />
+                                <span className="ms-1">Blacklist</span>
+                            </a> */}
+                            <Link to={'/blacklist'}>
+                                <BookX />
+                                <span className="ms-1">Blacklist</span>
+                            </Link>
                         </Button>
                     </div>
                     <div>
-                        <Button variant="ghost">
-                            <Settings />
-                            <span className="ms-1">Settings</span>
+                        <Button
+                            variant="ghost"
+                            asChild
+                            onClick={() => setIsOpen(false)}
+                        >
+                            {/* <a href="/settings">
+                                <Settings />
+                                <span className="ms-1">Settings</span>
+                            </a> */}
+                            <Link to={'/settings'}>
+                                <Settings />
+                                <span className="ms-1">Settings</span>
+                            </Link>
                         </Button>
                     </div>
                 </div>

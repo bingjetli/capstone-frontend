@@ -18,6 +18,13 @@ import {
 import SidebarButton from './components/v2/SidebarButton';
 import { Button } from './components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ReservationsRoute from '@/components/v2/routes/ReservationsRoute';
+import ErrorsRoute from '@/components/v2/routes/ErrorsRoute';
+import SettingsRoute from '@/components/v2/routes/SettingsRoute';
+import BlacklistRoute from '@/components/v2/routes/BlacklistRoute';
+import { Toaster } from '@/components/ui/toaster.jsx';
+import { NetworkContext } from './components/NetworkContext';
 
 /** HOW TO WORKAROUND RENDER'S 50+ second Boot Up Time
  *
@@ -29,17 +36,49 @@ import { Separator } from '@/components/ui/separator';
  *
  */
 
+const the_router = createBrowserRouter([
+    {
+        path: '/',
+        element: <ReservationsRoute />,
+        errorElement: <ErrorsRoute />,
+    },
+    {
+        path: '/settings',
+        element: <SettingsRoute />,
+    },
+    {
+        path: '/blacklist',
+        element: <BlacklistRoute />,
+    },
+]);
+
 export default function App() {
+    //TODO: Don't make this state, this doesn't need to trigger a re-render.
+    const [last_network_request, setLastNetworkRequest] = useState(0);
+    const [last_network_state, setLastNetworkState] = useState(null);
+
+    const apiFetch = (resource, options) => {
+        const backend_api_endpoint = import.meta.env.VITE_BACKEND_API_ENDPOINT;
+
+        setLastNetworkRequest(Date.now());
+        return fetch(`${backend_api_endpoint}${resource ?? ''}`, options);
+    };
+
     return (
-        <div className="">
-            <div className="flex justify-between items-center">
-                <SidebarButton className="" />
-                <div className="grow text-center">ACME</div>
-                <div className="h-10 w-10">&nbsp;</div>
-            </div>
-            <Separator />
-            <div>Content</div>
-        </div>
+        <>
+            <NetworkContext.Provider
+                value={{
+                    last_network_request,
+                    setLastNetworkRequest,
+                    last_network_state,
+                    setLastNetworkState,
+                    apiFetch,
+                }}
+            >
+                <RouterProvider router={the_router} />
+                <Toaster />
+            </NetworkContext.Provider>
+        </>
     );
 }
 
@@ -163,7 +202,7 @@ export default function App() {
 //                                     }
 //                                 >
 //                                     Reservations
-//                                 </div>
+//                                 </>
 //                             </button>
 //                             <button
 //                                 className="poppins-light text-center py-4 block w-full flex flex-col items-center"

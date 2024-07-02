@@ -74,3 +74,72 @@
         @apply bg-background text-foreground;
     }
 }
+
+.max-h-content {
+    max-height: calc(100vh - 40px);
+    overflow: auto;
+}
+
+/* .max-h-content > div.relative.w-full {
+    max-height: calc(100% - 40px - 48.75px);
+    height: 100%;
+} */
+
+.max-h-reservation-viewer {
+    max-height: calc(100% - 40px - 48.75px);
+}
+
+.max-h-reservation-viewer > div {
+    /* This is required to allow the sticky header to work properly due to the
+    hidden DIV inside the Table element */
+    max-height: inherit;
+    overflow: unset;
+    position: unset;
+}
+
+.max-h-reservation-viewer-body {
+    max-height: calc(100% - 48px);
+    overflow-y: auto;
+}
+
+.reservation-table-body-clear .relative {
+    /* Used to prevent new stacking contexts from being created inside the
+    reservation table body due to the overflow & position properties being
+    unset in the ancestor wrapper */
+    position: unset;
+}
+
+.max-w-reservation-card {
+    --card-width: max(70px, calc(((100vw - (1rem * 2)) / 7) - (1rem * 2)));
+    max-width: var(--card-width);
+    width: var(--card-width);
+}
+
+.max-h-new-reservation-form {
+    max-height: calc(100% - 28px - 1rem);
+}
+
+.max-w-reservation-detail-content {
+    --detail-content-width: min(calc(100vw - (24px * 2)), 375px);
+    max-width: var(--detail-content-width);
+}
+
+.debug {
+    outline: 1px dashed red;
+}
+
+._debug > * {
+    outline: 1px dashed blue;
+}
+
+._debug > * > * {
+    outline: 1px dashed green;
+}
+
+._debug > * > * > * {
+    outline: 1px dashed orange;
+}
+
+._debug > * > * > * > * {
+    outline: 1px dashed purple;
+}
