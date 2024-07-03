@@ -1,7 +1,13 @@
 {
     "compilerOptions": {
         // Other compiler options you might have
-        "jsx": "preserve" // This line fixes the JSX handling error
+        "jsx": "preserve", // This line fixes the JSX handling error
+
+        //Adding the following to resolve paths for shadcn-ui.
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"]
+        }
     },
     "exclude": ["node_modules"]
 }

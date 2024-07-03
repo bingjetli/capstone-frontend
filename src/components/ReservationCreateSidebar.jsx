@@ -85,7 +85,6 @@ export default function ReservationCreateSidebar({
         if (notes) {
             post_payload['notes'] = notes;
         }
-        console.log(post_payload);
 
         //Construct the POST request.
         const backend_api_endpoint = import.meta.env.VITE_BACKEND_API_ENDPOINT;
