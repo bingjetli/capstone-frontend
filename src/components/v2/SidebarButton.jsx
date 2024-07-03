@@ -68,16 +68,13 @@ export default function SidebarButton({ className }) {
                             asChild
                             onClick={() => setIsOpen(false)}
                         >
-                            {/* <a href="/reservation-requests">
-                                <BookDown />
-                                <span className="ms-1">
-                                    Reservation Requests
-                                </span>
-                            </a> */}
                             <Link to={'/reservation-requests'}>
                                 <BookDown />
                                 <span className="ms-1">
                                     Reservation Requests
+                                </span>
+                                <span className="ms-4 px-2 py-1 uppercase text-xs bg-yellow-400">
+                                    WIP
                                 </span>
                             </Link>
                         </Button>
@@ -95,6 +92,9 @@ export default function SidebarButton({ className }) {
                             <Link to={'/blacklist'}>
                                 <BookX />
                                 <span className="ms-1">Blacklist</span>
+                                <span className="ms-4 px-2 py-1 uppercase text-xs bg-yellow-400">
+                                    WIP
+                                </span>
                             </Link>
                         </Button>
                     </div>
@@ -111,6 +111,9 @@ export default function SidebarButton({ className }) {
                             <Link to={'/settings'}>
                                 <Settings />
                                 <span className="ms-1">Settings</span>
+                                <span className="ms-4 px-2 py-1 uppercase text-xs bg-yellow-400">
+                                    WIP
+                                </span>
                             </Link>
                         </Button>
                     </div>
@@ -118,7 +121,7 @@ export default function SidebarButton({ className }) {
                 <Separator />
                 <SheetFooter>
                     <p className="text-xs text-muted-foreground">
-                        Version 0.1a
+                        Version 0.1.1
                     </p>
                 </SheetFooter>
             </SheetContent>

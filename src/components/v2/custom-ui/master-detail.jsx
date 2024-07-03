@@ -15,7 +15,12 @@ function useMasterDetailContext() {
     return context;
 }
 
-const MasterDetail = ({ className = '', children, ...props }) => {
+const MasterDetail = ({
+    className = '',
+    children,
+    asMainView = false,
+    ...props
+}) => {
     const [detail_is_shown, setDetailIsShown] = useState(false);
     const [active_detail, setActiveDetail] = useState(null);
 
@@ -26,17 +31,24 @@ const MasterDetail = ({ className = '', children, ...props }) => {
                 setDetailIsShown,
                 active_detail,
                 setActiveDetail,
+                asMainView,
             }}
         >
             <div className={'bl-md-viewport overflow-clip ' + ' ' + className}>
                 {/* Inside the viewport wrapper... */}
                 <div
                     className={
-                        'bl-md-main-content flex flex-nowrap max-w-[200%]' +
-                        ` ${active_detail ? ' w-[200%]' : ' w-full'}` +
+                        'bl-md-main-content h-full flex flex-nowrap max-w-[200%]' +
+                        ` ${
+                            active_detail
+                                ? ` w-[200%] ${asMainView ? 'md:w-full' : ''}`
+                                : ' w-full'
+                        }` +
                         `${
                             detail_is_shown
-                                ? ' transition-transform translate-x-[-50%]'
+                                ? ` transition-transform translate-x-[-50%] ${
+                                      asMainView ? 'md:translate-x-0' : ''
+                                  }`
                                 : ' transition-transform translate-x-0'
                         }`
                     }
@@ -50,13 +62,23 @@ const MasterDetail = ({ className = '', children, ...props }) => {
 };
 
 const MasterContent = ({ className = '', children, ...props }) => {
-    const { detail_is_shown, setDetailIsShown } = useMasterDetailContext();
+    const { detail_is_shown, asMainView } = useMasterDetailContext();
 
-    if (detail_is_shown) {
+    if (detail_is_shown && !asMainView) {
         return <div className={'w-full' + ' ' + className}>&nbsp;</div>;
     }
 
-    return <div className={'w-full' + ' ' + className}>{children}</div>;
+    return (
+        <div
+            className={
+                `w-full ${asMainView ? 'md:basis-[320px] md:shrink-0 ' : ''}` +
+                ' ' +
+                className
+            }
+        >
+            {children}
+        </div>
+    );
 };
 
 const DetailContent = ({ className = '', children, identifier, ...props }) => {
@@ -65,6 +87,7 @@ const DetailContent = ({ className = '', children, identifier, ...props }) => {
         setDetailIsShown,
         active_detail,
         setActiveDetail,
+        asMainView,
     } = useMasterDetailContext();
 
     if (active_detail !== identifier) {
@@ -80,10 +103,12 @@ const DetailContent = ({ className = '', children, identifier, ...props }) => {
         <div
             data-md-identifier={identifier}
             data-md-is-shown={detail_is_shown}
-            className={'w-full' + ' ' + className}
+            className={
+                `w-full ${asMainView ? 'md:grow ' : ''}` + ' ' + className
+            }
         >
             {/* Header */}
-            <div className="relative mb-8">
+            <div className={`relative mb-8 ${asMainView ? '' : ''}`}>
                 {/* Contextual Back Icon */}
                 <Button
                     variant="ghost"
