@@ -1,0 +1,8 @@
+{
+    "crons": [
+        {
+            "path": "/crons/ping-backend.js",
+            "schedule": "*/5 8-21 * * *"
+        }
+    ]
+}

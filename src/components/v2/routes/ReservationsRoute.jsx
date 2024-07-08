@@ -24,6 +24,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import ReservationDetailsButton from '../ReservationDetailsButton';
 import { ReservationContext } from '../contexts/ReservationContext';
+import { H1 } from '../custom-ui/typography';
 
 //offset is used to determine how much to change the reference date
 //in order to recalcuate the date range.
@@ -150,11 +151,9 @@ export default function ReservationsRoute() {
                         <div className="flex flex-row-reverse">
                             <NewReservationButton />
                         </div>
-                        <h1 className="text-3xl leading-relaxed">
-                            {format(reference_date, 'MMM, yyyy')}
-                        </h1>
+                        <H1>{format(reference_date, 'MMM, yyyy')}</H1>
                     </div>
-                    <div className="border rounded-md overflow-x-auto max-h-reservation-viewer">
+                    <div className="border rounded-md overflow-x-auto max-h-reservation-viewer mt-4">
                         <Table>
                             {/* Content Section */}
                             <TableHeader className="sticky top-0 bg-background outline outline-1 outline-border">
