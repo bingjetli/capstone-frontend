@@ -36,11 +36,12 @@ import {
 } from './custom-ui/master-detail';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { formatISO, parseISO } from 'date-fns';
+import { format, formatISO, parseISO } from 'date-fns';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useToast } from '../ui/use-toast';
 import { useReservationContext } from './contexts/ReservationContext';
+import { P } from './custom-ui/typography';
 
 /** TODO:
  * - Implement Reservation Requests Route
@@ -290,7 +291,7 @@ export default function ReservationDetailsButton({ data, ...props }) {
                                 <div className="flex flex-nowrap gap-4">
                                     {/* Firstname & Last Name */}
                                     <div className="grow">
-                                        <div className="capitalize text-lg">
+                                        <div className="capitalize text-3xl font-bold">
                                             {data['firstName']}
                                         </div>
                                         <Separator />
@@ -300,7 +301,7 @@ export default function ReservationDetailsButton({ data, ...props }) {
                                     </div>
                                     {/* Seats */}
                                     <div className="">
-                                        <div className="text-3xl text-center">
+                                        <div className="text-6xl text-center font-bold">
                                             {data['seats']}
                                         </div>
                                         <div className="text-xs text-muted-foreground">
@@ -310,6 +311,16 @@ export default function ReservationDetailsButton({ data, ...props }) {
                                         </div>
                                     </div>
                                 </div>
+                                {data && data['date'] ? (
+                                    <div className="font-bold text-muted-foreground">
+                                        <P>
+                                            {format(
+                                                parseISO(data['date']),
+                                                'PPPPp'
+                                            )}
+                                        </P>
+                                    </div>
+                                ) : null}
                                 {/* Additional Notes Section */}
                                 {data['notes'] ? (
                                     <p className="mt-2 break-words max-w-reservation-detail-content">
