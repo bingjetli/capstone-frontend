@@ -86,7 +86,7 @@
 } */
 
 .max-h-reservation-viewer {
-    max-height: calc(100% - 40px - 48.75px);
+    max-height: calc(100% - 40px - 152px + 1rem);
 }
 
 .max-h-reservation-viewer > div {
