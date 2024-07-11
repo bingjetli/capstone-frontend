@@ -25,19 +25,15 @@ import { Skeleton } from '@/components/ui/skeleton';
 import ReservationDetailsButton from '../ReservationDetailsButton';
 import { ReservationContext } from '../contexts/ReservationContext';
 import { H1 } from '../custom-ui/typography';
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 //offset is used to determine how much to change the reference date
 //in order to recalcuate the date range.
 const recalculateDateRange = (reference_date, offset = 0) => {
-    const new_reference_date =
-        offset > 0
-            ? addWeeks(reference_date, offset)
-            : offset < 0
-            ? subWeeks(reference_date, offset * -1)
-            : new Date();
     return eachDayOfInterval({
-        start: startOfWeek(new_reference_date),
-        end: endOfWeek(new_reference_date),
+        start: startOfWeek(reference_date),
+        end: endOfWeek(reference_date),
     });
 };
 
@@ -63,7 +59,7 @@ export default function ReservationsRoute() {
                     ])
                 )
             ),
-        [reference_date]
+        [reference_date, date_range]
     );
 
     const initial_state_entry_initializer = useMemo(
@@ -78,7 +74,7 @@ export default function ReservationsRoute() {
                     ])
                 )
             ),
-        [reference_date]
+        [reference_date, date_range]
     );
     const [reservation_data, setReservationData] = useState([
         ['null', JSON.parse(initial_state_entry_initializer)],
@@ -151,9 +147,39 @@ export default function ReservationsRoute() {
                         <div className="flex flex-row-reverse">
                             <NewReservationButton />
                         </div>
-                        <H1>{format(reference_date, 'MMM, yyyy')}</H1>
+                        <div className="my-4">
+                            <H1>{format(reference_date, 'MMM, yyyy')}</H1>
+                        </div>
+                        <div className="flex flex-row items-center justify-end">
+                            <Button
+                                variant="ghost"
+                                onClick={() =>
+                                    setReferenceDate(
+                                        subWeeks(reference_date, 1)
+                                    )
+                                }
+                            >
+                                <ChevronLeft />
+                            </Button>
+                            <Button
+                                variant="ghost"
+                                onClick={() => setReferenceDate(new Date())}
+                            >
+                                Today
+                            </Button>
+                            <Button
+                                variant="ghost"
+                                onClick={() =>
+                                    setReferenceDate(
+                                        addWeeks(reference_date, 1)
+                                    )
+                                }
+                            >
+                                <ChevronRight />
+                            </Button>
+                        </div>
                     </div>
-                    <div className="border rounded-md overflow-x-auto max-h-reservation-viewer mt-4">
+                    <div className="h-full border rounded-md overflow-x-auto max-h-reservation-viewer mt-4">
                         <Table>
                             {/* Content Section */}
                             <TableHeader className="sticky top-0 bg-background outline outline-1 outline-border">
