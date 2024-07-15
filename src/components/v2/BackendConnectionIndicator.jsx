@@ -20,7 +20,7 @@ const FETCH_TIMEOUT_SEC = 60 * 3;
 //should try to ping the server in order to update the connection state.
 const MIN_PING_ELAPSED_MS = 60 * 5 * 1000;
 
-export function BackendConnectionIndicator() {
+export function BackendConnectionIndicator({ hidden = false }) {
     const {
         last_network_request,
         setLastNetworkRequest,
@@ -81,6 +81,10 @@ export function BackendConnectionIndicator() {
             setLastNetworkState('connected');
         });
     }, []);
+
+    if (hidden) {
+        return null;
+    }
 
     switch (last_network_state) {
         case null:

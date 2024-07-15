@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
+import { BackendConnectionIndicator } from './BackendConnectionIndicator';
 
 export default function AppHeader() {
     return (
@@ -16,9 +17,10 @@ export default function AppHeader() {
                 <div className="appheader-content__right">
                     <Button asChild>
                         <Link to="/app/reservations">
-                            <span>Try the demo</span>
+                            <span>Go To The App</span>
                         </Link>
                     </Button>
+                    <BackendConnectionIndicator hidden={true} />
                 </div>
             </div>
         </div>
