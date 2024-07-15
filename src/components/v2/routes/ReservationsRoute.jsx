@@ -140,10 +140,8 @@ export default function ReservationsRoute() {
             <div className="flex flex-col h-screen w-screen max-h-screen">
                 <AppBar />
                 <Separator />
-                <div className="grow p-4 max-h-content">
-                    {/* Main reservation wrapper */}
-                    <div>
-                        {/* Header section */}
+                <div className="main-reservation-wrapper grow p-4 max-h-content">
+                    <div className="main-reservation-wrapper__header">
                         <div className="flex flex-row-reverse">
                             <NewReservationButton />
                         </div>

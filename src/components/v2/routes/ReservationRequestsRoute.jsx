@@ -264,7 +264,7 @@ export default function ReservationRequestsRoute() {
                             {/* Header Section */}
                             <H1>Reservation Requests</H1>
                         </div>
-                        <div className="border rounded-md flex flex-col flex-nowrap mt-4">
+                        <div className="border rounded-md flex flex-col flex-nowrap mt-4 overflow-y-auto max-h-reservation-request-viewer">
                             {reservation_requests.map((rr, rri) => {
                                 if (!rr) {
                                     return (

@@ -9,6 +9,11 @@ import {
     CircleAlert,
 } from 'lucide-react';
 import { useNetworkContext } from '../NetworkContext';
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from '@/components/ui/hover-card';
 
 const FETCH_TIMEOUT_SEC = 60 * 3;
 //If more than 5 minutes has passed since the last network request, we
@@ -46,21 +51,21 @@ export function BackendConnectionIndicator() {
             //yet, this timer will still ber running because we should
             //clear this timer once we get a response. Therefore, if this
             //block of code gets to execute, we've timed out on the fetch request.
-            sendToast({
-                title: 'Connection Timed Out',
-                description:
-                    'It seems like the backend server is unreachable at the moment, please try again at a later time.',
-            });
+            // sendToast({
+            //     title: 'Connection Timed Out',
+            //     description:
+            //         'It seems like the backend server is unreachable at the moment, please try again at a later time.',
+            // });
             clearTimeout(fetch_timout_timer);
             setLastNetworkState('timedout');
         }, FETCH_TIMEOUT_SEC * 1000);
 
         //Notify the user that we are about to make the pinging fetch request...
-        sendToast({
-            title: 'Attempting to connect to backend',
-            description:
-                'The backend is hosted on Render, their free plan has a boot time due to the server spinning down from inactivity. Please wait while we attempt to connect the server.',
-        });
+        // sendToast({
+        //     title: 'Attempting to connect to backend',
+        //     description:
+        //         'The backend is hosted on Render, their free plan has a boot time due to the server spinning down from inactivity. Please wait while we attempt to connect the server.',
+        // });
 
         //Construct the pinging fetch request..
         // setLastNetworkRequest(Date.now());
@@ -68,10 +73,10 @@ export function BackendConnectionIndicator() {
         // const backend_api_endpoint = import.meta.env.VITE_BACKEND_API_ENDPOINT;
         apiFetch().then(() => {
             //If we got a response...
-            sendToast({
-                title: 'Connected',
-                description: 'Successfully connected to the backend server!',
-            });
+            // sendToast({
+            //     title: 'Connected',
+            //     description: 'Successfully connected to the backend server!',
+            // });
             clearInterval(fetch_timout_timer);
             setLastNetworkState('connected');
         });
@@ -80,33 +85,80 @@ export function BackendConnectionIndicator() {
     switch (last_network_state) {
         case null:
             return (
-                <span>
-                    <CircleDashed />
-                </span>
+                <HoverCard>
+                    <HoverCardTrigger>
+                        <div className="p-2">
+                            <CircleDashed />
+                        </div>
+                    </HoverCardTrigger>
+                    <HoverCardContent>
+                        <p className="typography-body">
+                            Preparing to connect to the backend API.
+                        </p>
+                    </HoverCardContent>
+                </HoverCard>
             );
         case 'fetching':
             return (
-                <span>
-                    <CircleDotDashed className="stroke-sky-500 animate-ping" />
-                </span>
+                <HoverCard>
+                    <HoverCardTrigger>
+                        <div className="p-2">
+                            <CircleDotDashed className="stroke-sky-500 animate-ping" />
+                        </div>
+                    </HoverCardTrigger>
+                    <HoverCardContent>
+                        <p className="typography-body">
+                            Please wait while we attempt to connect to the
+                            backend API.
+                        </p>
+                    </HoverCardContent>
+                </HoverCard>
             );
         case 'timedout':
             return (
-                <span>
-                    <CircleAlert className="stroke-orange-500" />
-                </span>
+                <HoverCard>
+                    <HoverCardTrigger>
+                        <div className="p-2">
+                            <CircleAlert className="stroke-orange-500" />
+                        </div>
+                    </HoverCardTrigger>
+                    <HoverCardContent>
+                        <p className="typography-body">
+                            The connection to the backend API timed out. Please
+                            try again later.
+                        </p>
+                    </HoverCardContent>
+                </HoverCard>
             );
         case 'connected':
             return (
-                <span>
-                    <CircleCheck className="stroke-green-500" />
-                </span>
+                <HoverCard>
+                    <HoverCardTrigger>
+                        <div className="p-2">
+                            <CircleCheck className="stroke-green-500" />
+                        </div>
+                    </HoverCardTrigger>
+                    <HoverCardContent>
+                        <p className="typography-body">
+                            Successfully connected to the backend API.
+                        </p>
+                    </HoverCardContent>
+                </HoverCard>
             );
         default:
             return (
-                <span>
-                    <CircleHelp className="stroke-slate-500" />
-                </span>
+                <HoverCard>
+                    <HoverCardTrigger>
+                        <div className="p-2">
+                            <CircleHelp className="stroke-slate-500" />
+                        </div>
+                    </HoverCardTrigger>
+                    <HoverCardContent>
+                        <p className="typography-body">
+                            An unknown error occured.
+                        </p>
+                    </HoverCardContent>
+                </HoverCard>
             );
     }
 }

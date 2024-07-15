@@ -136,7 +136,7 @@ export default function BlacklistRoute() {
         apiFetch('/api/blacklist/fetch/all')
             .then((r) => {
                 if (r.status !== 204) {
-                    r.json();
+                    return r.json();
                 }
             })
             .then((json) => {
@@ -303,11 +303,7 @@ export default function BlacklistRoute() {
                             </TableHeader>
                             <TableBody>
                                 {blacklist.map((be, bei) => (
-                                    <Dialog
-                                        key={bei}
-                                        open={entry_details_is_open}
-                                        onOpenChange={setEntryDetailsIsOpen}
-                                    >
+                                    <Dialog key={be['_id']}>
                                         <DialogTrigger asChild>
                                             <TableRow key={bei}>
                                                 <TableCell>{bei}</TableCell>

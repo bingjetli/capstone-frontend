@@ -37,92 +37,81 @@ export default function SidebarButton({ className }) {
                 }
             >
                 <SheetHeader>
-                    <SheetTitle className="">Main Navigation</SheetTitle>
+                    <SheetTitle className="hidden">Main Navigation</SheetTitle>
                     <SheetDescription className="hidden">
                         Contains the main navigational links for this web
                         application.
                     </SheetDescription>
                 </SheetHeader>
-                <Separator />
-                <div className="grow">
+                <div className="main-nav grow flex flex-col w-full">
                     {/** Main Sheet Content */}
-                    <div>
-                        <Button
-                            variant="ghost"
-                            asChild
-                            onClick={() => setIsOpen(false)}
+                    <Button
+                        variant="ghost"
+                        asChild
+                        onClick={() => setIsOpen(false)}
+                    >
+                        <Link
+                            to={'/app/reservations'}
+                            className="w-full"
                         >
-                            {/* <a href="/">
+                            <div className="w-full flex items-center gap-2">
                                 <BookUser />
-                                <span className="ms-1">Reservations</span>
-                            </a> */}
-                            <Link to={'/'}>
-                                <BookUser />
-                                <span className="ms-1">Reservations</span>
-                            </Link>
-                        </Button>
-                    </div>
-                    <div>
-                        <Button
-                            variant="ghost"
-                            asChild
-                            onClick={() => setIsOpen(false)}
-                        >
-                            <Link to={'/reservation-requests'}>
+                                <span className="typography-link">
+                                    Reservations
+                                </span>
+                            </div>
+                        </Link>
+                    </Button>
+                    <Button
+                        variant="ghost"
+                        asChild
+                        onClick={() => setIsOpen(false)}
+                    >
+                        <Link to={'/app/reservation-requests'}>
+                            <div className="w-full flex items-center gap-2">
                                 <BookDown />
-                                <span className="ms-1">
+                                <span className="typography-link">
                                     Reservation Requests
                                 </span>
-                                <span className="ms-4 px-2 py-1 uppercase text-xs bg-yellow-400">
-                                    WIP
-                                </span>
-                            </Link>
-                        </Button>
-                    </div>
-                    <div>
-                        <Button
-                            variant="ghost"
-                            asChild
-                            onClick={() => setIsOpen(false)}
-                        >
-                            {/* <a href="/blacklist">
+                            </div>
+                        </Link>
+                    </Button>
+                    <Button
+                        variant="ghost"
+                        asChild
+                        onClick={() => setIsOpen(false)}
+                        className="w-full"
+                    >
+                        <Link to={'/app/blacklist'}>
+                            <div className="w-full flex items-center gap-2">
                                 <BookX />
-                                <span className="ms-1">Blacklist</span>
-                            </a> */}
-                            <Link to={'/blacklist'}>
-                                <BookX />
-                                <span className="ms-1">Blacklist</span>
-                                <span className="ms-4 px-2 py-1 uppercase text-xs bg-yellow-400">
+                                <span className="typography-link">
+                                    Blacklist
+                                </span>
+                            </div>
+                        </Link>
+                    </Button>
+                    {/* <Button
+                        variant="ghost"
+                        asChild
+                        onClick={() => setIsOpen(false)}
+                    >
+                        <Link to={'/app/settings'}>
+                            <div className="w-full flex items-center gap-2">
+                                <Settings />
+                                <span className="typography-link">
+                                    Settings
+                                </span>
+                                <span className="px-2 py-1 uppercase text-xs bg-yellow-400">
                                     WIP
                                 </span>
-                            </Link>
-                        </Button>
-                    </div>
-                    <div>
-                        <Button
-                            variant="ghost"
-                            asChild
-                            onClick={() => setIsOpen(false)}
-                        >
-                            {/* <a href="/settings">
-                                <Settings />
-                                <span className="ms-1">Settings</span>
-                            </a> */}
-                            <Link to={'/settings'}>
-                                <Settings />
-                                <span className="ms-1">Settings</span>
-                                <span className="ms-4 px-2 py-1 uppercase text-xs bg-yellow-400">
-                                    WIP
-                                </span>
-                            </Link>
-                        </Button>
-                    </div>
+                            </div>
+                        </Link>
+                    </Button> */}
                 </div>
                 <Separator />
                 <SheetFooter>
-                    <p className="text-xs text-muted-foreground">
-                        Version 0.1.1
-                    </p>
+                    <small className="typography-caption">Version 0.1.2</small>
                 </SheetFooter>
             </SheetContent>
         </Sheet>
