@@ -1,31 +1,13 @@
-import { useMemo, useState } from 'react';
-import AppContent from './components/AppContent';
-import { useAnimate } from 'framer-motion';
-import Modal from './components/Modal';
-import BackIcon from './components/BackIcon';
-import ReservationCreateSidebar from './components/ReservationCreateSidebar';
-import SettingsContext from './components/SettingsContext';
-
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
-
-import SidebarButton from './components/v2/SidebarButton';
-import { Button } from './components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import ReservationsRoute from '@/components/v2/routes/ReservationsRoute';
-import ErrorsRoute from '@/components/v2/routes/ErrorsRoute';
-import SettingsRoute from '@/components/v2/routes/SettingsRoute';
-import BlacklistRoute from '@/components/v2/routes/BlacklistRoute';
+import { useState } from 'react';
 import { Toaster } from '@/components/ui/toaster.jsx';
+import BlacklistRoute from '@/components/v2/routes/BlacklistRoute';
+import ErrorsRoute from '@/components/v2/routes/ErrorsRoute';
+import ReservationsRoute from '@/components/v2/routes/ReservationsRoute';
+import SettingsRoute from '@/components/v2/routes/SettingsRoute';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { NetworkContext } from './components/NetworkContext';
 import ReservationRequestsRoute from './components/v2/routes/ReservationRequestsRoute';
+import LandingRoute from './components/v2/routes/LandingRoute';
 
 /** HOW TO WORKAROUND RENDER'S 50+ second Boot Up Time
  *
@@ -40,19 +22,23 @@ import ReservationRequestsRoute from './components/v2/routes/ReservationRequests
 const the_router = createBrowserRouter([
     {
         path: '/',
-        element: <ReservationsRoute />,
+        element: <LandingRoute />,
         errorElement: <ErrorsRoute />,
     },
     {
-        path: '/settings',
+        path: '/app/reservations',
+        element: <ReservationsRoute />,
+    },
+    {
+        path: '/app/settings',
         element: <SettingsRoute />,
     },
     {
-        path: '/reservation-requests',
+        path: '/app/reservation-requests',
         element: <ReservationRequestsRoute />,
     },
     {
-        path: '/blacklist',
+        path: '/app/blacklist',
         element: <BlacklistRoute />,
     },
 ]);

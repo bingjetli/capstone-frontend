@@ -3,14 +3,21 @@ import { BackendConnectionIndicator } from '@/components/v2/BackendConnectionInd
 
 export default function AppBar() {
     return (
-        <>
-            <div className="flex justify-between items-center">
+        <div className="appbar flex justify-between items-center">
+            <div className="appbar__left">
                 <SidebarButton className="" />
-                <div className="grow text-center">ACME</div>
-                <div className="h-10 w-10 flex justify-center items-center">
-                    <BackendConnectionIndicator />
-                </div>
             </div>
-        </>
+            <div className="appbar__center">
+                <a
+                    className="default-site-logo"
+                    href="/"
+                >
+                    Cette
+                </a>
+            </div>
+            <div className="appbar__right flex">
+                <BackendConnectionIndicator />
+            </div>
+        </div>
     );
 }

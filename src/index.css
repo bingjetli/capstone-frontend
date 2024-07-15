@@ -71,7 +71,25 @@
         @apply border-border;
     }
     body {
-        @apply bg-background text-foreground;
+        @apply bg-background text-foreground font-normal font-ptsans;
+    }
+
+    .typography-body {
+        @apply font-ptsans font-normal text-base;
+    }
+
+    .typography-link {
+        @apply font-ptsans hover:underline;
+    }
+
+    .typography-caption {
+        @apply font-ptsans text-muted-foreground text-xs;
+    }
+}
+
+@layer components {
+    .default-site-logo {
+        @apply font-black text-2xl;
     }
 }
 
@@ -124,7 +142,11 @@
     max-width: var(--detail-content-width);
 }
 
-.debug {
+.max-h-reservation-request-viewer {
+    max-height: calc(100% - 96px - 16px);
+}
+
+._debug {
     outline: 1px dashed red;
 }
 

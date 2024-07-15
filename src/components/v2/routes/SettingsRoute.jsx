@@ -2,6 +2,12 @@ import AppBar from '@/components/v2/AppBar';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { ChevronRight, Info } from 'lucide-react';
+import {
+    DetailContent,
+    MasterContent,
+    MasterDetail,
+} from '../custom-ui/master-detail';
+import { H1 } from '../custom-ui/typography';
 
 function Setting({ icon, name }) {
     return (
@@ -23,14 +29,13 @@ export default function SettingsRoute() {
         <div className="flex flex-col w-screen h-screen">
             <AppBar />
             <Separator />
-            <div className="grow p-4 w-full max-w-[425px] mx-auto">
-                {/* CONTENT */}
-                <h1 className="text-3xl leading-relaxed">Settings</h1>
-                <Setting
-                    name="About"
-                    icon={<Info />}
-                />
-            </div>
+            <MasterDetail>
+                <MasterContent>
+                    <H1>Settings</H1>
+                    <div>adfadsf</div>
+                </MasterContent>
+                <DetailContent>content 1</DetailContent>
+            </MasterDetail>
         </div>
     );
 }
