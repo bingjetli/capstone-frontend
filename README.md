@@ -2,7 +2,7 @@
 
 This repository contains the capstone project for my Humber Summer 2024 Web Development program.
 
-This is a fully-interactable frontend hosted on Vercel's serverless hosting platform. At the time of writing, it contains all the features of the MVP which includes CRUD actions on Reservations. It also partially implements the reservation requests features listed in the original requirements document.
+This is a fully-interactable frontend hosted on Vercel's serverless hosting platform.
 
 This project is currently under active development.
 

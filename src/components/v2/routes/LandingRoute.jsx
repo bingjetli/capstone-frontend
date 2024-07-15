@@ -162,7 +162,9 @@ export default function LandingRoute() {
                             Free Now!
                         </p>
                         <div className="text-center">
-                            <Button className="mt-16">Try It Now</Button>
+                            <Button className="mt-16">
+                                <Link to="/app/reservations">Try It Now</Link>
+                            </Button>
                         </div>
                     </div>
                 </div>
